@@ -20,9 +20,9 @@ outputLayer = net.getLayerNames()
 outputLayer = [outputLayer[i - 1] for i in net.getUnconnectedOutLayers()]
 
 # IP_WEBCAM_URL = "http://185.98.0.114:8888/mjpg/video.mjpg" # Wind Mill
-IP_WEBCAM_URL = "http://212.147.38.3/mjpg/video.mjpg" # 4 Way Road
+# IP_WEBCAM_URL = "http://212.147.38.3/mjpg/video.mjpg" # 4 Way Road
 # IP_WEBCAM_URL = "http://211.132.61.124/mjpg/video.mjpg" # Japan Bridge
-# IP_WEBCAM_URL = "http://80.66.36.54/cgi-bin/faststream.jpg" # Austria Bridge
+IP_WEBCAM_URL = "http://80.66.36.54/cgi-bin/faststream.jpg" # Austria Bridge
 # IP_WEBCAM_URL = "http://93.87.72.254:8090/mjpg/video.mjpg" # Street Market
 # IP_WEBCAM_URL = "http://192.168.0.108:8080/video" # IPV4 WebCam
 # IP_WEBCAM_URL = 0 # Laptop Front WebCam
@@ -76,7 +76,7 @@ while True:
             cv2.putText(frame, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
     # Resize the frame dynamically based on screen dimensions
-    # frame = cv2.resize(frame, (screen_width, screen_height))
+    frame = cv2.resize(frame, (screen_width, screen_height))
 
     cv2.imshow('Output', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
