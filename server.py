@@ -14,8 +14,8 @@ from flask import (
     send_from_directory
 )
 
-# import darkweb as vix
-# vix.run_server()
+import darkweb as vix
+vix.run_server()
 app = Flask(__name__)
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'media/screenshots')
