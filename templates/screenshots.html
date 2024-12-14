@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="20"> <!-- Refresh every 20 seconds -->
+
+    <title>Screenshots</title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1><a href="#" class="heading-link">Screenshots</a></h1>
+        <table id="screenshots-table" class="display">
+            <thead>
+                <tr>
+                    <th>Filename</th>
+                    <th>Preview</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data will be injected here by JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script>
+        // Injecting CSS using JavaScript
+        const style = document.createElement('style');
+        style.innerHTML = `
+            body {
+                font-family: 'Poppins', sans-serif;
+                background-color: #f4f7fc;
+                color: #333;
+                margin: 0;
+                padding: 0;
+            }
+            .container {
+                width: 90%;
+                margin: 50px auto;
+                padding: 20px;
+                background-color: white;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+                text-align: center;
+            }
+            h1 {
+                color: #3a3a3a;
+                margin-bottom: 30px;
+                font-weight: 600;
+            }
+            .heading-link {
+                text-decoration: none;
+                color: #3498db;
+            }
+            .heading-link:hover {
+                color: #1d78b3;
+                text-decoration: underline;
+            }
+            table.dataTable {
+                width: 100%;
+                margin-top: 20px;
+                border-collapse: collapse;
+                font-size: 14px;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            table.dataTable thead {
+                background-color: #3498db;
+                color: white;
+            }
+            table.dataTable tbody {
+                background-color: #ffffff;
+            }
+            table.dataTable tbody tr:nth-child(even) {
+                background-color: #f9f9f9;
+            }
+            table.dataTable tbody tr:hover {
+                background-color: #f1f1f1;
+                transition: background-color 0.3s ease;
+            }
+            th, td {
+                padding: 12px 18px;
+                text-align: left;
+                font-weight: 500;
+            }
+            th {
+                font-size: 16px;
+                text-transform: uppercase;
+            }
+            .dataTables_wrapper .dataTables_paginate .paginate_button {
+                padding: 8px 15px;
+                margin: 2px;
+                border-radius: 5px;
+                background-color: #3498db;
+                color: white;
+                border: none;
+                transition: background-color 0.3s ease;
+            }
+            .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+                background-color: #1d78b3;
+            }
+            img {
+                border-radius: 8px;
+                transition: transform 0.3s ease;
+            }
+            img:hover {
+                transform: scale(1.1);
+            }
+            .dataTables_wrapper .dataTables_filter {
+                margin-bottom: 30px;  /* Add gap between the search bar and the table */
+            }
+        `;
+        document.head.appendChild(style);
+        
+        $(document).ready(function() {
+            $('#screenshots-table').DataTable({
+                "ajax": {
+                    "url": "/list_screenshots",
+                    "dataSrc": ""
+                },
+                "columns": [
+                    { 
+                        "data": "filename",
+                        "render": function(data, type, row) {
+                            return `<a href="${row.url}" target="_blank">${data}</a>`;
+                        }
+                    },
+                    { 
+                        "data": "url",
+                        "render": function(data, type, row) {
+                            return `<img src="${data}" alt="${row.filename}" style="width: 120px;">`;
+                        }
+                    }
+                ],
+                "order": [[0, "desc"]]
+            });
+        });
+    </script>
+</body>
+</html>
