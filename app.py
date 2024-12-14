@@ -12,9 +12,9 @@ from flask import (
 )
 
 # from HostTor import VicksTor
-# import VicksTor as vix
+import VicksTor as vix
 
-# vix.run_server('flask')
+vix.run_server('flask')
 app = Flask(__name__)
 
 # Configuration for file uploads
@@ -45,7 +45,7 @@ def list_screenshots():
     """Fetch and display uploaded screenshots."""
     screenshots = []
     for filename in os.listdir(app.config['UPLOAD_FOLDER']):
-        if filename.endswith(('jpg', 'jpeg', 'png', 'gif')):
+        if filename.endswith(('jpg', 'jpeg', 'png')):
             screenshots.append({
                 'filename': filename,
                 'url': f"/media/screenshots/{filename}"
@@ -64,4 +64,4 @@ def serve_screenshot(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=False, host='0.0.0.0')
