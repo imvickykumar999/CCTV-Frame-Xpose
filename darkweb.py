@@ -5,7 +5,7 @@ def run_server(server = 'flask'):
 
     onion = 'HiddenServiceDir'
     _port = ':9151'
-    torrc_loc = input('\nEnter installed path of `Tor Browser` folder : ')
+    torrc_loc = r'C:\Users\surface\Desktop\Tor Browser'
 
     if torrc_loc == '':
         torrc_loc = f'C:/Users/{os.getlogin()}/Desktop/Tor Browser'

@@ -2,6 +2,9 @@
 # pip install VicksTor
 # pip install stem
 
+# from HostTor import VicksTor
+# import VicksTor as vix
+
 import os
 from flask import (
     Flask, 
@@ -11,9 +14,7 @@ from flask import (
     send_from_directory
 )
 
-# from HostTor import VicksTor
-import VicksTor as vix
-
+import darkweb as vix
 vix.run_server()
 app = Flask(__name__)
 
