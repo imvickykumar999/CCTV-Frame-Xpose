@@ -1,3 +1,4 @@
 media/screenshots/
 HiddenServiceDir/hs_ed25519_secret_key
 *.pyc
+media/yolov3.weights
