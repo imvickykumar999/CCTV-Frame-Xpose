@@ -1,11 +1,7 @@
-># `CCTV Frame Xpose`
->
->        ngrok http --url=secure-bluegill-purely.ngrok-free.app 5000
+# `Deployed on` [`Dark Web`](http://4k3cs34r5ycnbqaihxwa5m7e2eu4ilmxczrdolzu6taewecpl7w4w5id.onion/)
 
-## `Deployed on Surface Web`
-[![image](https://github.com/user-attachments/assets/ee3cd3f9-805f-496a-9159-9154cfe18251)](https://secure-bluegill-purely.ngrok-free.app/)
+![image](https://github.com/user-attachments/assets/3ad2782d-978d-4e28-ad61-1d92feebaba4)
 
-## `Deployed on Dark Web`
-[![image](https://github.com/user-attachments/assets/e0a1f770-5408-4925-8fc5-587d8e7179bc)](http://4k3cs34r5ycnbqaihxwa5m7e2eu4ilmxczrdolzu6taewecpl7w4w5id.onion/)
+![image](https://github.com/user-attachments/assets/e0a1f770-5408-4925-8fc5-587d8e7179bc)
 
-**Note : If links are not working, means, Server might not running on my Laptop right now.**
+    If links are not working, means, `DarkWeb Server` might not running on my Laptop right now.**
