@@ -14,15 +14,14 @@ from flask import (
 # from HostTor import VicksTor
 import VicksTor as vix
 
-vix.run_server('flask')
+vix.run_server()
 app = Flask(__name__)
 
-# Configuration for file uploads
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'media/screenshots')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 MB file size limit
+app.config['MAX_CONTENT_LENGTH'] = 5 * 1024 * 1024
 
 @app.route('/upload_screenshot', methods=['POST'])
 def upload_screenshot():
@@ -34,11 +33,12 @@ def upload_screenshot():
     if file.filename == '':
         return jsonify({"message": "No selected file"}), 400
 
-    # Save the file
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
     file.save(file_path)
-
-    return jsonify({"message": "File uploaded successfully", "url": f"/media/screenshots/{file.filename}"})
+    return jsonify({
+        "message": "File uploaded successfully", 
+        "url": f"/media/screenshots/{file.filename}"
+    })
 
 @app.route('/list_screenshots', methods=['GET'])
 def list_screenshots():
