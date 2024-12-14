@@ -76,9 +76,9 @@ while True:
             cv2.putText(frame, text, (x, y - 5), cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
 
     # Resize the frame dynamically based on screen dimensions
-    resized_frame = cv2.resize(frame, (screen_width, screen_height))
+    # frame = cv2.resize(frame, (screen_width, screen_height))
 
-    cv2.imshow('Output', resized_frame)
+    cv2.imshow('Output', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
