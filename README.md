@@ -1,6 +1,5 @@
 # `Deployed on` [`Dark Web`](http://4k3cs34r5ycnbqaihxwa5m7e2eu4ilmxczrdolzu6taewecpl7w4w5id.onion/)
 
-        ngrok config add-authtoken 2pzF3jTetUJHkKtV3TFgPmQwVGz_5QS1xdSUR8NARHc4pjvMh
         ngrok http --url=secure-bluegill-purely.ngrok-free.app 5000
         
 ![image](https://github.com/user-attachments/assets/3ad2782d-978d-4e28-ad61-1d92feebaba4)
