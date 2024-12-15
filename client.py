@@ -10,9 +10,9 @@ os.makedirs(SAVE_DIR, exist_ok=True)
 
 # ngrok http --url=secure-bluegill-purely.ngrok-free.app 5000
 # UPLOAD_URL = "https://secure-bluegill-purely.ngrok-free.app/upload_screenshot"
-# UPLOAD_URL = "4k3cs34r5ycnbqaihxwa5m7e2eu4ilmxczrdolzu6taewecpl7w4w5id.onion/upload_screenshot"
+UPLOAD_URL = "4k3cs34r5ycnbqaihxwa5m7e2eu4ilmxczrdolzu6taewecpl7w4w5id.onion/upload_screenshot"
 # UPLOAD_URL = "https://crmss.pythonanywhere.com/upload_screenshot"
-UPLOAD_URL = "http://127.0.0.1:5000/upload_screenshot"
+# UPLOAD_URL = "http://127.0.0.1:5000/upload_screenshot"
 
 # IP_WEBCAM_URL = "http://185.98.0.114:8888/mjpg/video.mjpg" # Wind Mill
 # IP_WEBCAM_URL = "http://212.147.38.3/mjpg/video.mjpg" # 4 Way Road
