@@ -15,8 +15,8 @@ from flask import (
     send_from_directory
 )
 
-# import darkweb as vix
-# vix.run_server()
+import darkweb as vix
+vix.run_server()
 app = Flask(__name__)
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'media/screenshots')
@@ -44,27 +44,40 @@ def upload_screenshot():
 
 @app.route('/list_screenshots', methods=['GET'])
 def list_screenshots():
-    """Fetch and display uploaded screenshots."""
-    screenshots = []
-    for filename in os.listdir(app.config['UPLOAD_FOLDER']):
-        if filename.endswith(('jpg', 'jpeg', 'png')):
-            screenshots.append({
-                'filename': filename,
-                'url': f"/media/screenshots/{filename}"
-            })
-    # screenshots.reverse()
-    return jsonify(screenshots)
+    search_query = request.args.get('search', '').lower()
+    page = int(request.args.get('page', 1))
+    per_page = int(request.args.get('per_page', 8))
 
-@app.route('/datatable', methods=['GET'])
-def render_screenshots_page():
-    """Render the HTML page for displaying screenshots."""
-    return render_template('screenshots.html')
+    # List all image files
+    all_files = [
+        {
+            'filename': f, 
+            'url': f"/media/screenshots/{f}",
+            'last_modified': os.path.getmtime(os.path.join(app.config['UPLOAD_FOLDER'], f))
+        }
+        for f in os.listdir(app.config['UPLOAD_FOLDER']) 
+        if f.endswith(('jpg', 'jpeg', 'png'))
+    ]
+
+    # Sort files by last modified timestamp (newest first)
+    all_files.sort(key=lambda x: x['last_modified'], reverse=True)
+
+    # Search filter
+    if search_query:
+        all_files = [f for f in all_files if search_query in f['filename'].lower()]
+
+    # Pagination
+    start = (page - 1) * per_page
+    end = start + per_page
+    paginated_files = all_files[start:end]
+
+    return jsonify(paginated_files)
 
 @app.route('/')
 def home():
     """Render the main page with dynamic images."""
     # Build the list of images
-    
+
     screenshots = []
     for filename in os.listdir(app.config['UPLOAD_FOLDER']):
         if filename.endswith(('jpg', 'jpeg', 'png')):

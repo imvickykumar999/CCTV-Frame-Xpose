@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="30"> <!-- Refresh every 20 seconds -->
+    <meta http-equiv="refresh" content="120"> <!-- Refresh every 2 Minutes -->
 
     <title>Hall of Fame | Recent Time-Lapses</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
@@ -103,19 +103,118 @@
     <div class="header">
         <h1>
             <a href="/" style="text-decoration: none; color: inherit;">
-                Hall of Fame | <span>Recent Time-Lapses</span>
+                Hall of Fame | <span>Time-Lapses</span>
             </a>
         </h1>
     </div>
 
-    <!-- Image Grid -->
-    <div class="image-grid">
-        {% for image in images %}
-        <div class="image-card">
-            <img src="{{ image.url }}" alt="Time-lapse Image">
-            <div class="caption">{{ image.filename }}</div>
-        </div>
-        {% endfor %}
+    <!-- Search Bar -->
+    <div class="search-container">
+        <input type="text" id="search" placeholder="Search for an image...">
+        <button onclick="searchImages()">Search</button>
     </div>
+
+    <!-- Image Grid -->
+    <div class="image-grid" id="image-container"></div>
+
+    <!-- Loading Indicator -->
+    <div id="loading" style="text-align: center; display: none; color: #ffd700; font-size: 1rem;">
+        Loading...
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        let page = 1; // Page number for pagination
+        const perPage = 12; // Number of images per load
+        let loading = false; // Prevent duplicate AJAX calls
+        let hasMoreImages = true; // Flag to stop requests when no more data
+
+        const imageContainer = document.getElementById('image-container');
+        const loadingIndicator = document.getElementById('loading');
+
+        // Function to load images dynamically
+        async function loadImages() {
+            if (loading || !hasMoreImages) return;
+            loading = true;
+            loadingIndicator.style.display = 'block';
+
+            try {
+                const response = await fetch(`/list_screenshots?page=${page}&per_page=${perPage}`);
+                const data = await response.json();
+
+                if (data.length > 0) {
+                    data.forEach(item => {
+                        const card = document.createElement('div');
+                        card.classList.add('image-card');
+                        card.innerHTML = `
+                            <a href="${item.url}" target="_blank">
+                                <img src="${item.url}" alt="${item.filename}">
+                            </a>
+                            <div class="caption">${item.filename}</div>
+                        `;                    
+                        imageContainer.appendChild(card);
+                    });
+                    page++; // Increment page number for the next request
+                } else {
+                    hasMoreImages = false; // No more images to load
+                    loadingIndicator.innerText = "No more images to load.";
+                }
+            } catch (error) {
+                console.error("Error loading images:", error);
+                loadingIndicator.innerText = "Error loading images.";
+            } finally {
+                loading = false;
+                if (!hasMoreImages) {
+                    loadingIndicator.style.display = 'none';
+                }
+            }
+        }
+
+        // Infinite Scroll: Load images when user scrolls near the bottom (50% of screen)
+        window.addEventListener('scroll', () => {
+            if (window.scrollY >= document.body.offsetHeight / 2 - window.innerHeight) {
+                loadImages();
+            }
+        });
+
+        // Search Functionality
+        async function searchImages() {
+            const query = document.getElementById('search').value.trim();
+            imageContainer.innerHTML = ''; // Clear current images
+            page = 1;
+            hasMoreImages = true;
+
+            try {
+                const response = await fetch(`/list_screenshots?search=${query}&page=${page}&per_page=${perPage}`);
+                const data = await response.json();
+
+                if (data.length > 0) {
+                    data.forEach(item => {
+                        const card = document.createElement('div');
+                        card.classList.add('image-card');
+                        card.innerHTML = `
+                            <a href="${item.url}" target="_blank">
+                                <img src="${item.url}" alt="${item.filename}">
+                            </a>
+                            <div class="caption">${item.filename}</div>
+                        `;                    
+                        imageContainer.appendChild(card);
+                    });
+                    page++;
+                } else {
+                    hasMoreImages = false;
+                    loadingIndicator.style.display = 'block';
+                    loadingIndicator.innerText = "No images found.";
+                }
+            } catch (error) {
+                console.error("Error during search:", error);
+                loadingIndicator.innerText = "Error searching images.";
+            }
+        }
+
+        // Initial Load
+        window.onload = loadImages;
+    </script>
+
 </body>
 </html>
