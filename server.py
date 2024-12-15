@@ -6,6 +6,7 @@
 # import VicksTor as vix
 
 import os
+from datetime import datetime
 from flask import (
     Flask, 
     request, 
@@ -14,8 +15,8 @@ from flask import (
     send_from_directory
 )
 
-import darkweb as vix
-vix.run_server()
+# import darkweb as vix
+# vix.run_server()
 app = Flask(__name__)
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'media/screenshots')
@@ -54,10 +55,27 @@ def list_screenshots():
     # screenshots.reverse()
     return jsonify(screenshots)
 
-@app.route('/', methods=['GET'])
+@app.route('/datatable', methods=['GET'])
 def render_screenshots_page():
     """Render the HTML page for displaying screenshots."""
     return render_template('screenshots.html')
+
+@app.route('/')
+def home():
+    """Render the main page with dynamic images."""
+    # Build the list of images
+    
+    screenshots = []
+    for filename in os.listdir(app.config['UPLOAD_FOLDER']):
+        if filename.endswith(('jpg', 'jpeg', 'png')):
+            screenshots.append({
+                'filename': filename,
+                'url': f"/media/screenshots/{filename}"
+            })
+
+    # Sort images by date descending
+    screenshots.sort(key=lambda x: x['url'], reverse=True)
+    return render_template('index.html', images=screenshots)
 
 @app.route('/media/screenshots/<filename>')
 def serve_screenshot(filename):
