@@ -6,4 +6,4 @@
 ![image](https://github.com/user-attachments/assets/d226cacf-b120-45e1-bd1a-6033f66b61d0)
 ![image](https://github.com/user-attachments/assets/e0a1f770-5408-4925-8fc5-587d8e7179bc)
 
-    If links are not working, means, `DarkWeb Server` might not running on my Laptop right now.**
+    If links are not working, means, DarkWeb Server might not running on my Laptop right now.
